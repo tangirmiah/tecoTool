@@ -1,0 +1,116 @@
+.home {
+  background-image: url(welcome.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 100%;
+  background-repeat: no-repeat;
+}
+.loginFailed {
+  margin: 0 auto;
+  max-width: 20vw;
+}
+
+.datepicker-date-display,
+.datepicker-table td.is-selected {
+  background-color: #1976d2;
+}
+
+.datepicker-table td.is-today,
+.datepicker-done,
+.datepicker-cancel {
+  color: #1976d2;
+}
+
+.loginBox {
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  max-width: 360px;
+  margin: 5vh auto 100px;
+  padding: 45px;
+  text-align: center;
+
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.login {
+  width: 100%;
+}
+#addTask {
+  max-height: 100%;
+}
+
+.addGroup {
+  width: 100%;
+}
+.taskOptions {
+  max-width: 100%;
+}
+
+.trun {
+  max-width: 10vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.people {
+  text-transform: capitalize;
+}
+
+.readMore {
+  color: #1976d2;
+  display: inline-block;
+}
+
+.readMore:hover {
+  cursor: pointer;
+}
+
+.modulesList:hover {
+  color: gray;
+}
+.makeCap {
+  text-transform: capitalize;
+}
+
+.task-selector:hover {
+  border: 2px solid gray;
+  cursor: pointer;
+}
+.pagination li.active,
+.pagination li:hover {
+  background-color: #2196f3;
+}
+.limit-task {
+  height: 40vh;
+  overflow: auto;
+}
+::-webkit-scrollbar {
+  width: 20px;
+}
+::-webkit-scrollbar-track {
+  border: 3px solid #1e88e5;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e88e5;
+}
+
+.hide {
+  display: none;
+}
+
+.borderTask {
+  border: 1px solid #1e88e5;
+}
+
+select {
+  -webkit-appearance: menulist-textfield;
+  height: auto;
+}
+
+.addMember {
+  height: 100vh;
+}
+
+.addMemberSelection {
+  height: 10vh;
+}

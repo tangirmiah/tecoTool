@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Supervisor dashboard</title>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="/asset/style.css" />
+  </head>
+  <body>
+    <!-- nav bar with menu and logo  -->
+    <nav class="nav-wrapper blue darken-3">
+      <div class="container">
+        <a href="" class="brand-logo">TeCoTooL</a>
+        <a href="" class="sidenav-trigger" data-target="mobile-links"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul class="right hide-on-med-and-down">
+          <li><a href="">Home</a></li>
+          <li><a href="">Groups</a></li>
+          <li><a href="/logOut">log Out</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- menu when smaller screen  -->
+    <ul class="sidenav" id="mobile-links">
+      <li><a href="">Home</a></li>
+      <li><a href="">Groups</a></li>
+      <li><a href="" class="">Projects</a></li>
+    </ul>
+    <!--  -->
+    <div class="container">
+      <div class="row">
+        <!-- group info -->
+        <div class="col s12 m12 l12">
+          <div class="container ">
+            <h1><%=groupName%> </h1>
+            <h4><%= data[2][0].projectName%></h4>
+            <div class="row">
+              <!-- member name -->
+              <ul class="collection col s12 m12 l4">
+
+              <%data[6].forEach(function (userInfo){ %>
+              
+                <li class="collection-item">
+                <% if(userInfo.info == "administrator"){%>
+                  <i class="material-icons left red-text ">account_box</i
+                  ><a href="#memberView" class="modal-trigger red-text user-selector"><div class="people"><%=userInfo.uName%> <%=userInfo.surname%></div> 
+                  <p id="userIDInfo"  class="hide"><%=userInfo.userID%></p></a>
+                <%} else { %>
+                  <i class="material-icons left blue-text ">account_box</i
+                  ><a href="#memberView" class="modal-trigger user-selector"><div class="people"><%=userInfo.uName%> <%=userInfo.surname%> </div>
+                  <p id="userIDInfo"  class="hide"><%=userInfo.userID%></p></a>
+                  <%}%>
+                </li>
+              <% }) %>
+                
+                
+              </ul>
+              <!-- graph -->
+              
+              <div class="col s6">
+              <h5 class="hide-on-med-and-down">Graph of task completed</h5>
+                <img
+                  src="/asset/img/chart.png"
+                  alt="graph"
+                  class="responsive-img hide-on-med-and-down"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <!-- feeback -->
+
+              <div class="col s12 m12 l12">
+                <h4>Feedback</h4>
+                <div class="card horizontal">
+                  <div class="card-stacked">
+                    <div class="card-content">
+                    <!-- last feedback -->
+                    <% data[0].forEach(function (feedback) { %>
+                    <p>
+                      <%=feedback.feedbackInfo%>
+                    </p>
+                    <% }) %>
+                    </div>
+                    <div class="card-action row">
+                      <a
+                        href="#addFeedback"
+                        class="blue-text modal-trigger col s12 m6 l5"
+                        ><span class="center">Add new feedback</span></a
+                      >
+                      <a
+                        href="#viewPastFeedbacks"
+                        class="blue-text modal-trigger col s12 m6 l6"
+                        ><span class="center">Past feedbacks</span></a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col s2"></div>
+            </div>
+            <div class="row">
+              <div class="col s12 m6 l6">
+                <a
+                  href="/tasks/<%=uID%>/<%=pID%>?page=1"
+                  class="btn blue"
+                  target="blank"
+                  style="width: 100%;"
+                  ><span>Show Tasks</span></a
+                >
+              </div>
+              <div class="col s12 m6 l6">
+                <a
+                  href="#viewDeliverables"
+                  class="btn green modal-trigger"
+                  style="width: 100%;"
+                  ><span>view deliverables</span></a
+                >
+              </div>
+              <div class="col s12 m12 l12"></div>
+              <!-- add new member -->
+              <div class=" col s12 m12 l12">
+                <a
+                  href="#newMember"
+                  class="btn red darken-4 modal-trigger"
+                  style="width: 100%;"
+                  ><span> Add new member</span></a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- modal for deliverables -->
+      <div class="modal" id="viewDeliverables">
+        <div class="modal-content">
+          <ul class="collection">
+            <li class="collection-item row">
+              <span class="col s6 m7 l8 active">Deliverable 1</span
+              ><a href="#" class="col s6 m5 l4 grey lighten-4">download</a>
+            </li>
+            <li class="collection-item row">
+              <span class="col s6 m7 l8 active">Deliverable 2</span
+              ><a href="#" class="col s6 m5 l4 grey lighten-4">download</a>
+            </li>
+            <li class="collection-item row">
+              <span class="col s6 m7 l8 active">Deliverable 3</span
+              ><a href="#" class="col s6 m5 l4 grey lighten-4">download</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- modal new member -->
+      <div class="modal addMember" id="newMember">
+        <div class=" modal-content">
+          <div class="row">
+            <form class="col s12" action="/addPerson/<%=pID%>/<%=groupID%>" method="POST">
+              <div class="row">
+                <div class="input-field col s6">
+                <script>
+                  $(document).ready(function(){
+                    $('input.autocomplete').autocomplete({
+                      data: {
+                        <% autocom.forEach(function(names){ %>
+                            "<%=names.email%>" : null,  
+                        <%});%>
+                      },
+                      limit : 3
+                    });
+                  });
+                </script>
+                  <input id="first_name" type="text" class="validate autocomplete" name="personName"/>
+                  <label for="first_name">email</label>
+                </div>
+                <div class="input-field col s6">
+                  <select size="2"  name="roleSelection">
+                    <option value="" disabled selected>Role</option>
+                    <% roles.forEach(function(role){ %>
+                      <option  value="<%=role.userRoleID%>"><%=role.info%></option>
+                    <%});%>
+                    
+                  </select>
+                  <label>Role</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <button
+                  class="btn blue right waves-effect waves-light"
+                  type="submit"
+                  name="action"
+                >
+                  Add
+                  <i class="material-icons right">send</i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- member modal -->
+      <div class="modal" id="memberView">
+        <div class="modal-content center">
+          <i class="material-icons" style="font-size: 10rem;">account_circle</i>
+          <br />
+          <ul class="collection ">
+
+
+          <script>
+                  $(document).ready(function(){
+                    $('.user-selector').click(function(){
+                      <% data[6].forEach(function (userInfo) { %>
+                        if(<%=userInfo.userID%> == $(this).find("#userIDInfo").text()){
+                          $("#userName").text("Name: <%=userInfo.uName%>");
+                          $("#userSurname").text("Surname: <%=userInfo.surname%>");
+                          $("#userRole").text("Role: <%=userInfo.info%>");
+                        }
+                      <% }) %>
+                    })
+                  });
+                </script>
+            <li class="collection-item row center">
+              <span id="userName" class="col people"></span>
+            </li>
+            <li class="collection-item row">
+              <span id="userSurname" class="col people"></span>
+            </li>
+            <li class="collection-item row">
+              <span id="userRole" class="col people"></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- modal for add feedback -->
+      <div class="modal" id="addFeedback">
+      
+        <div class="modal-content">
+        <form action="/addFeedback/<%=uID%>/<%=pID%>" method="post">
+          <div class="row">
+            <div class="col s12">
+              <h3>Write your feedback</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="textarea1" name="feedbackDescription" class="materialize-textarea"></textarea>
+              <label for="textarea1">Description</label>
+            </div>
+          </div>
+          <button type="submit" class="modal-close btn blue">
+            Submit <i class="material-icons right">send</i>
+          </button>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+        
+          
+        </div>
+        
+      </div>
+      <!-- view past feedbacks -->
+      <div class="modal" id="viewPastFeedbacks">
+        <div class="modal-content">
+          <ul class="collection">
+          <div class="card-content">
+          <!-- all the feedbacks -->
+            <% data[1].forEach(function (feedback, index) { %>
+              <li class="collection-item row">
+              <span class="col s12 m12 l12">Feedback <%=index+1%></span>
+              <p class="col s12 l12 m12 grey lighten-3 truncate">
+                <%=feedback.feedbackInfo%>
+              </p> 
+
+
+              <% if(feedback.feedbackInfo.length > 100) { %>
+              <span class="readMore right">read more</span>
+              <% } %>
+              </li> 
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/asset/controller.js"></script>
+  </body>
+</html>

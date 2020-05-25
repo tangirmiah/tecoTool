@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Home</title>
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="/asset/style.css" />
+  </head>
+  <body class="home">
+  
+    <div class="container">
+
+      
+      
+      
+      <div id="log1" class="loginBox">
+        <form action="/auth" method="POST">
+          <div class=" row">
+            <div class="input-field col s12">
+              <input id="userName" type="text" class="validate" name="userName"/>
+              <label for="userName">Username</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate" name="password"/>
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="">
+            <button class=" btn blue waves-effect login   " type="submit" name="action">Login In
+            </button>
+          </div>
+          <a href="#"><p>Forgot password?</p></a>
+        </form>
+      </div>
+      <!--  -->
+
+      <%if(message === "true") {%>
+      <div id="loginFailed" class="row center loginFailed">
+        <div class="col s12 m12 l12">
+          <div class="card red darken-3">
+            <div class="card-content white-text center">
+              <span class="card-title">Login Failed</span>
+              <p>Try again</p>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <%}%>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/asset/controller.js"></script>
+  </body>
+</html>

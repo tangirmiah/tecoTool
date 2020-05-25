@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Supervisor dashboard</title>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="/asset/style.css" />
+  </head>
+  <body>
+    <!-- nav bar with menu and logo  -->
+    <nav class="nav-wrapper blue darken-3">
+      <div class="container">
+        <a href="" class="brand-logo">TeCoTooL</a>
+        <a href="" class="sidenav-trigger" data-target="mobile-links"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul class="right hide-on-med-and-down">
+          <li><a href="">Home</a></li>
+          <li><a href="">Groups</a></li>
+          <li><a href="/logOut">log Out</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- menu when smaller screen  -->
+    <ul class="sidenav" id="mobile-links">
+      <li><a href="">Home</a></li>
+      <li><a href="">Groups</a></li>
+      <li><a href="" class="">Projects</a></li>
+    </ul>
+    <!--  -->
+    <!-- group selection -->
+
+    <div class="container ">
+      <h1>Project 1</h1>
+      <div class="row">
+        <ul class="collection with-header col s12 l4 m4 borderTask">
+          <li class="row collection-header ">
+            <span class="col s12 m12 l12 center"><h5>Task</h5></span>
+            
+          </li>
+                <script>
+                  $(document).ready(function(){
+                    $('li.task-selector').click(function(){
+                      
+                      //console.log($(this).find("#taskID").text());
+                      $("#taskDetailTitle").toggle();
+                      $("#taskDeadline").toggle();
+                      $("#taskDescription").toggle();
+                      <% data[0].forEach(function (task) { %>
+                        //console.log("<%=task.taskID%>");
+                        if(<%=task.taskID%> == $(this).find("#taskIDmin").text()){
+                          
+                          console.log(<%=task.taskID%>);
+                          $("#taskID").text("<%=task.taskID%>")
+
+                          $("#taskDetailTitle").text("<%=task.title%>").fadeIn();
+                          
+                          $("#taskDescription").text("<%=task.description%>").fadeIn();
+                          
+                          $("#taskDeadline").text("<%=task.deadline%>").fadeIn();
+
+                          $('#deleteTaskForm').attr('action', '/studentDashTaskDelete/<%=uID%>/<%=pID%>/<%=task.taskID%>');
+
+                          $('#changeStatusTaskForm').attr('action', '/changeTaskStatus/<%=uID%>/<%=pID%>/<%=task.taskID%>');
+                          <%if(task.priority == 1){%> 
+                            $("#taskPriority").removeClass().addClass("green-text text-lighten-3");
+                            $("#taskPriority").text("Low").fadeIn();
+                          <%}else if(task.priority == 2){%>
+                            $("#taskPriority").removeClass().addClass("amber-text");
+                            $("#taskPriority").text("Medium").fadeIn();
+                          <%}else{%>
+                            $("#taskPriority").removeClass().addClass("red-text text-darken-2");
+                            $("#taskPriority").text("High").fadeIn();
+                          <%}%> 
+
+                          //setting editing modal
+                          $("#task_titleEdit").attr('value','<%=task.title%>');
+                          $("#textareaTitleEdit").text("<%=task.description%>");
+                          $("#taskDeadineEdit").attr('value','<%=task.deadline%>');
+                          $("#priorityEdit").val("<%=task.priority%>");
+                          $("#editTaskForm").attr('action', '/studentDashTaskEdit/<%=uID%>/<%=pID%>/<%=task.taskID%>');
+                          
+                          
+                          
+                        }
+                      <% }) %>
+                    })
+                  });
+                </script>
+          <div class="limit-task"> 
+          <% data[0].forEach(function (task) { %>
+          <li class="collection-item  center task-selector <% if(task.status==1) {%>green lighten-3<%} else{%>red lighten-3<%} %>">
+            <div class="task-div">
+              <p id="taskIDmin" class="hide"><%=task.taskID%></p>
+              <span class="center people"><%=task.title%></span>
+              
+            </div>
+          </li>
+          <% }) %>
+          </div>
+          <!-- 
+          <li class="collection-item">
+            <span>Task 1</span>
+            <label>
+              <input type="checkbox" class="filled-in" checked="checked" />
+              <span class="right"></span>
+            </label>
+          </li>
+          <li class="collection-item">
+            <span>Task 2</span>
+            <label>
+              <input type="checkbox" class="filled-in" checked="checked" />
+              <span class="right"></span>
+            </label>
+          </li>
+          <li class="collection-item">
+            <span>Task 3</span>
+            <label>
+              <input type="checkbox" class="filled-in" />
+              <span class="right"></span>
+            </label>
+          </li>-->
+
+          <li class="collection-item">
+            <div class="">
+              <a
+                href="#addTask"
+                class="btn blue modal-trigger"
+                style="width: 100%;"
+                >Add new Task</a
+              >
+            </div>
+          </li>
+        </ul>
+        
+
+        <!-- task detail -->
+        <div class="col s12 l7 m7">
+        
+          <div class="card blue darken-1">
+          <%if(data[0][0] != undefined){%>    
+            <div class="card-content white-text">
+            
+              <p id="taskID" class="hide"><%=data[0][0].taskID%></p>
+              
+              <h2 id="taskDetailTitle" class="people"><%=data[0][0].title%></h2>
+              <h4>Description:</h4>
+              <p id="taskDescription">
+                <%=data[0][0].description%>
+              </p>
+              <h6 >Deadline:</h6>
+              <p id="taskDeadline"><%=data[0][0].deadline%></p>
+              <h6>Priority:</h6>
+              <%if(data[0][0].priority == 1){%> 
+                <h4 id="taskPriority" class="green-text text-lighten-3">Low</h4>
+              <%}else if(data[0][0].priority == 2){%>
+                <h4 id="taskPriority" class="amber-text">Medium</h4>
+              <%}else{%>
+                <h4 id="taskPriority" class=" red-text text-darken-2">High</h4>
+              <%}%> 
+            </div>
+            <div class="card-action">
+              <div class="row">
+                <form id="deleteTaskForm" action="/studentDashTaskDelete/<%=uID%>/<%=pID%>/<%=data[0][0].taskID%>" method="post">  
+                
+                  <button type="submit" value="Submit" class=" waves-effect waves-light btn-small red darken-2 col s12 m6 l4" ><i class="material-icons left">delete_forever</i>Delete</button>      
+                </form>
+              
+                <div> 
+                  <a href="#editTask" id="editTaskTrigger" class="modal-trigger waves-effect waves-light btn-small orange lighten-2 col s12 m6 l4" ><i class="material-icons left">edit</i>Edit</a>
+                </div>
+
+                <form id="changeStatusTaskForm" action="/changeTaskStatus/<%=uID%>/<%=pID%>/<%=data[0][0].taskID%>" method="post">  
+                
+                  <button type="submit" value="Submit" class=" waves-effect waves-light btn-small green darken-2 col s12 m6 l4" ><i class="material-icons left">cached</i>Change Status</button>      
+                </form>
+              </div>
+          <%}else{%>
+            <div class="card-content white-text">
+              <span class="card-title">No task for this project</span>
+              <div class="card-action">
+                <a
+                href="#addTask"
+                class="btn blue modal-trigger"
+                style="width: 100%;"
+                >Add new Task</a
+              >
+              </div>
+
+            </div>
+            <%}%>
+          </div>
+        
+        </div>
+
+        <!-- feedback -->
+        <div class="col s12 m12 l12">
+          <h4>Feedback</h4>
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <!-- last feedback -->
+                    <% data[1].forEach(function (feedback) { %>
+                    <p >
+                      <%=feedback.feedbackInfo%>
+                    </p>
+                    
+                    <% }) %>
+              </div>
+              <div class="card-action row">
+                <a
+                  href="#viewPastFeedbacks"
+                  class="blue-text modal-trigger col s12 m6 l6"
+                  ><span class="center">Past feedbacks</span></a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal" id="viewPastFeedbacks">
+        <div class="modal-content">
+          <ul class="collection">
+          <div class="card-content">
+          <!-- all the feedbacks -->
+            <% data[2].forEach(function (feedback, index) { %>
+              <li class="collection-item row">
+              <span class="col s12 m12 l12">Feedback <%=index+1%></span>
+              
+              <p id="feedback<%=index+1%>" class="col s12 l12 m12 grey lighten-3 truncate ">
+                <%=feedback.feedbackInfo%>  
+                
+              </p>
+              <% if(feedback.feedbackInfo.length > 100) { %>
+                <span class="readMore right">read more</span>
+              <% } %>
+              </li> 
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+      </div>
+    </div>
+    <!-- modal add new task -->
+    <div class="modal" id="addTask">
+      <div class="modal-content">
+        <form action="/studentDashTaskAdd/<%=uID%>/<%=pID%>" method="post">
+          <div class="row">
+            <div class="input-field col s12">
+              <input
+                id="task_title"
+                name="taskTitle"
+                type="text"
+                class="validate"
+              />
+              <label for="task_title">Title</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea
+                id="textarea1"
+                name="taskDescription"
+                class="materialize-textarea"
+              ></textarea>
+              <label for="textarea1">Description</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input
+                type="text"
+                id="taskDeadine"
+                name="taskDeadline"
+                class="datepicker"
+              />
+              <label for="taskDeadine">Deadline</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <select id="priority" name="taskPriority">
+                <option value="1">Low</option>
+                <option value="2">medium</option>
+                <option value="3">High</option>
+              </select>
+              <label for="priority">Priority</label>
+            </div>
+          </div>
+          <button type="submit" name="submidTask" class="btn blue right">
+            Submit <i class="material-icons right">send</i>
+          </button>
+        </form>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+
+    <!-- edit task modal  -->
+    <%if(data[0][0] != undefined){%>
+    <div class="modal" id="editTask">
+      <div class="modal-content">
+        <form id="editTaskForm" action="/studentDashTaskEdit/<%=uID%>/<%=pID%>/<%=data[0][0].taskID%>" method="post">
+          <div class="row">
+            <div class="input-field col s12">
+              <input
+                id="task_titleEdit"
+                name="taskTitle"
+                type="text"
+                class="validate"
+                value="<%=data[0][0].title%>"
+              />
+              <label for="task_title">Title</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea
+                id="textareaTitleEdit"
+                name="taskDescription"
+                class="materialize-textarea"
+                value=""
+              ><%=data[0][0].description%></textarea>
+              <label for="textareaTitleEdit">Description</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input
+                type="text"
+                id="taskDeadineEdit"
+                name="taskDeadline"
+                class="datepicker"
+                value="<%=data[0][0].deadline%>"
+              />
+              <label for="taskDeadineEdit">Deadline</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <select id="priorityEdit" name="taskPriorityEdit">
+                <% if(data[0][0].priority == 1){%>
+                <option value="1" seleced>Low</option>
+              <% } else{%>
+                <option value="1">Low</option>
+                <%}%>
+                <% if(data[0][0].priority == 2){%>
+                <option value="2" selected>Medium</option>
+                <% } else{%>
+                <option value="2" >Medium</option>
+                <%}%>
+                <% if(data[0][0].priority == 3){%>
+                <option value="3" selected>High</option>
+                <% } else{%>
+                <option value="3">High</option>
+                <%}%>
+              </select>
+              <label for="priority">Priority</label>
+            </div>
+          </div>
+          <button type="submit" name="submidTask" class="btn blue right">
+            Submit <i class="material-icons right">send</i>
+          </button>
+        </form>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+    <%}%>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/asset/controller.js"></script>
+  </body>
+</html>

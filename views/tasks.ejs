@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Supervisor dashboard</title>
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="/asset/style.css" />
+  </head>
+  <body>
+    <!-- nav bar with menu and logo  -->
+    <nav class="nav-wrapper blue darken-3">
+      <div class="container">
+        <a href="" class="brand-logo">TeCoTooL</a>
+        <a href="" class="sidenav-trigger" data-target="mobile-links"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul class="right hide-on-med-and-down">
+          <li><a href="">Home</a></li>
+          <li><a href="">Groups</a></li>
+          <li><a href="/logOut">log Out</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- menu when smaller screen  -->
+    <ul class="sidenav" id="mobile-links">
+      <li><a href="">Home</a></li>
+      <li><a href="">Groups</a></li>
+      <li><a href="" class="">Projects</a></li>
+    </ul>
+    <!--  -->
+    <div class="container ">
+      <table class="responsive-table bordered highlight">
+        <thead>
+          <tr>
+            <th data-field="id">Title</th>
+            <th data-field="assignedTo">Assigned to</th>
+            <th data-field="deadline">Deadline</th>
+            <th data-field="status">Status</th>
+            <th data-field="description">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% data.forEach(function (task) {%>
+        <tr>
+            <td><%=task.title %></td>
+            <td><%=task.uName%> <%=task.surname%></td>
+            <td><%=task.deadline %></td>
+            <td><% if(task.status == 0){ %>
+              Incomplete
+              <%} else{ %>
+              completed
+              <%}%>
+            </td>
+            <td>
+              <h6 class="trun">
+                <%=task.description %>
+              </h6>
+            </td>
+          </tr>
+
+        <% }); %>
+          
+
+        <ul class="pagination">
+          <%if(hasPreviousPage) {%>
+            <li class=""><a href="/tasks/<%=uID%>/<%=pID%>?page=<%= previousPage %>"><i class="material-icons">chevron_left</i></a></li>
+          <%}%>
+          <% if(currentPage != 1 && previousPage != 1) {%>
+            
+            <li class=""><a href="/tasks/<%=uID%>/<%=pID%>?page=1">1</a></>
+          <%}%>
+          <%if(hasPreviousPage) {%>
+            <li class="waves-effect"><a href="/tasks/<%=uID%>/<%=pID%>?page=<%= previousPage %>"><%= previousPage %></a></li>
+          <%}%>
+          <li class="waves-effect active"><a href="/tasks/<%=uID%>/<%=pID%>?page=<%= currentPage %>"><%= currentPage %></a></li>
+          <%if(hasNextPage) {%>
+            <li class="waves-effect"><a href="/tasks/<%=uID%>/<%=pID%>?page=<%= nextPage %>"><%= nextPage %></a></li>
+          <%}%>
+          <% if(currentPage != lastPage && nextPage != lastPage ) {%>
+            <li class="waves-effect"><a href="/tasks/<%=uID%>/<%=pID%>?page=<%= lastPage %>"><%= lastPage %></a></li>
+          <%}%>
+          <%if(hasNextPage) {%>
+            <li class="waves-effect"><a href="/tasks/<%=uID%>/<%=pID%>?page=<%= nextPage %>"><i class="material-icons">chevron_right</i></a></li>
+          <%}%>
+        </ul>
+        </tbody>
+
+        
+      </table>
+
+      <button
+        type="button"
+        class="btn blue waves-effect right"
+        onclick="window.open('', '_self', ''); window.close();"
+      >
+        Close
+      </button>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/asset/controller.js"></script>
+  </body>
+</html>

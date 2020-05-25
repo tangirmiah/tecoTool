@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Supervisor dashboard</title>
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="/asset/style.css" />
+  </head>
+  <body>
+    <!-- nav bar with menu and logo  -->
+    <nav class="nav-wrapper blue darken-3">
+      <div class="container">
+        <a href="" class="brand-logo">TeCoTooL</a>
+        <a href="" class="sidenav-trigger" data-target="mobile-links"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul class="right hide-on-med-and-down">
+          <li><a href="">Home</a></li>
+          <li><a href="">Groups</a></li>
+          <li><a href="/logOut">log Out</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- menu when smaller screen  -->
+    <ul class="sidenav" id="mobile-links">
+      <li><a href="">Home</a></li>
+      <li><a href="">Groups</a></li>
+      <li><a href="" class="">Projects</a></li>
+    </ul>
+    <!--  -->
+    <!-- group lection -->
+
+    
+    <div class="container ">
+    <h1>Your Modules:</h1>
+      <ul class="collapsible makeCap">
+        <% data[0].forEach(function(modules) {%>
+        
+          <li>
+            <div class="collapsible-header modulesList ">
+              <h4 >
+                <%=modules.moduleName%>
+              </h4>
+            </div>
+
+            <div class="collapsible-body"> 
+              <table class="responsive-table bordered highlight">
+                <thead>
+                  <tr>
+                    <th data-field="id">Name</th>
+                    <th data-field="Project">Project</th>
+                    <th data-field="noMembers">Number of members</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% modules.groups.forEach(function(group) {%>
+                  
+                  <tr class="dropdown-trigger" data-target="dropdown1">
+                    <td><%=group.groupName%></td>
+                    <td><%=group.projectName%></td>
+                    <td>4</td>
+                  </tr>
+                  <ul id="dropdown1" class="dropdown-content">
+                    <li><a href="/superDash/<%=session.userID%>/<%=group.projectID%>" class="center">Open</a></li>
+                  </ul>
+                  <%}) ; %>
+                </tbody>
+              </table>  
+            </div>
+          </li>
+          <!-- Dropdown Structure -->
+          
+        <%}); %>
+        </ul>
+          <!--<div class="collapsible-header">
+            <i class="material-icons">filter_drama</i>Programming 3 2019
+          </div>
+          <div class="collapsible-body">
+            <table class="responsive-table bordered highlight">
+              <thead>
+                <tr>
+                  <th data-field="id">Name</th>
+                  <th data-field="Project">Project</th>
+                  <th data-field="noMembers">Number of members</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr class="dropdown-trigger" data-target="dropdown1">
+                  <td>Group 1</td>
+                  <td>Worksheet 1</td>
+                  <td>4</td>
+                </tr>
+
+                <tr>
+                  <td>Group 2</td>
+                  <td>Worksheet 1</td>
+                  <td>4</td>
+                </tr>
+
+                <tr>
+                  <td>Group 2</td>
+                  <td>Worksheet 1</td>
+                  <td>4</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons">place</i>Networking 2019
+          </div>
+          <div class="collapsible-body">
+            <span>Lorem ipsum dolor sit amet.</span>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons">whatshot</i>webDev 2019
+          </div>
+          <div class="collapsible-body">
+            <span>Lorem ipsum dolor sit amet.</span>
+          </div>
+        </li>-->
+      
+
+      
+      <!-- add new group -->
+      <a href="#newGroup" class="btn blue modal-trigger">Create New Group</a>
+      <!-- new group modal -->
+      <div class="modal" id="newGroup">
+        <div class="modal-content">
+          <div class="row">
+            <form class="col s12">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="first_name" type="text" class="validate" />
+                  <label for="first_name">Group Name</label>
+                </div>
+                <div class="input-field col s6">
+                  <select>
+                    <option value="" disabled selected>Project</option>
+                    <option value="1">Project 1</option>
+                    <option value="2">Project 2</option>
+                  </select>
+                  <label>Project</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <select>
+                    <option value="" disabled selected>Module</option>
+                    <% data[0].forEach(function(modules) {%>
+                      <option><%=modules.moduleName%></option> 
+                    <%}) %>
+                  </select>
+                  <label>Module</label>
+                </div>
+              </div>
+              <div class="row">
+                <button
+                  class="btn blue right waves-effect waves-light"
+                  type="submit"
+                  name="action"
+                >
+                  Submit
+                  <i class="material-icons right">send</i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/asset/controller.js"></script>
+  </body>
+</html>
